@@ -1,0 +1,39 @@
+version: '3'
+services:
+  microblog-go:
+    build:
+      dockerfile: ./Docker/golang/DockerFile
+      context: .
+      args:
+        - PORT=$PORT
+    ports:
+      - $PORT:$PORT
+    environment:
+      DEBUG: $DEBUG
+      PORT: $PORT
+      MONGO_URI: $MONGO_URI
+      MONGO_DB: $MONGO_DB
+      JWT_SALT: $JWT_SALT
+      EXP_TIME: $EXP_TIME
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: $MONGO_INITDB_ROOT_USERNAME
+      MONGO_INITDB_ROOT_PASSWORD: $MONGO_INITDB_ROOT_PASSWORD
+
+  
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: $ME_CONFIG_MONGODB_ADMINUSERNAME
+      ME_CONFIG_MONGODB_ADMINPASSWORD: $ME_CONFIG_MONGODB_ADMINPASSWORD
+      ME_CONFIG_MONGODB_URL: $ME_CONFIG_MONGODB_URL
+    depends_on:
+      - mongo

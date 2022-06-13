@@ -1,0 +1,26 @@
+#
+# Build
+#
+
+ARG PORT
+
+FROM golang:1.18-buster AS build
+
+WORKDIR /app
+
+COPY golang/. ./
+
+RUN go build -ldflags="-s -w" -o apiMicroblog cmd/microblog/main.go
+
+#
+# Deploy
+#
+FROM gcr.io/distroless/base-debian10
+
+WORKDIR /opt/app
+
+COPY --from=build /app/apiMicroblog /opt/app/.
+
+EXPOSE $PORT
+
+ENTRYPOINT [ "./apiMicroblog" ]

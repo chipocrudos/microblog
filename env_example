@@ -1,0 +1,14 @@
+MONGO_INITDB_ROOT_USERNAME=root
+MONGO_INITDB_ROOT_PASSWORD=example
+
+ME_CONFIG_MONGODB_ADMINUSERNAME=root
+ME_CONFIG_MONGODB_ADMINPASSWORD=example
+ME_CONFIG_MONGODB_URL=mongodb://root:example@mongo:27017/
+
+DEBUG=true
+PORT=8080
+MONGO_URI=mongodb://root:example@deb:27017/?conect=direct
+MONGO_DB=microblog
+JWT_SALT=secret
+# Minutes of expiration time
+EXP_TIME=48
